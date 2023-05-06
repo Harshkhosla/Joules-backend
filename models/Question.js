@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-
+const {Schema}= mongoose;
 
 const QuestionSchema = new Schema({
+   user:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'user'
+  }, 
  homeCurrent :{
     type:String,
     require:true
@@ -11,7 +15,7 @@ const QuestionSchema = new Schema({
     require:true,
     
  },
- password :{
+ question :{
     type:String,
     require:true
  },

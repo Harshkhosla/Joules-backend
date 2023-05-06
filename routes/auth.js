@@ -103,4 +103,48 @@ router.post ('/getuser',fetchUser,async(req,res)=>{
     }
     });
 
+    
+router.put('/UserInformation/:id',[fetchUser],async(req,res)=>{
+  try{
+      // const errors = validationResult(req);
+      userID=req.user.id;
+      let user =await UserSignin.findOne({email:req.body.email});
+if (user){
+    return res.status(400).json({error:"Sorry user already exists "})
+}
+const {homeCurrent,voltage,question,addressLine1,addressLine2,city,state,postalCode,Project,Task,TaskDescription,Time,TotalTime,Status}=req.body
+// const addressLine1=req.body.addressLine1
+const newInformation={}
+
+if(homeCurrent){newInformation.homeCurrent=homeCurrent}
+if(voltage){newInformation.voltage=voltage}
+if(question){newInformation.question=question}
+if(addressLine1){newInformation.addressLine1=addressLine1}
+if(addressLine2){newInformation.addressLine2=addressLine2}
+if(city){newInformation.city=city}
+if(state){newInformation.state=state}
+if(postalCode){newInformation.postalCode=postalCode}
+if(Project){newInformation.Project=Project}
+if(Task){newInformation.Task=Task}
+if(TaskDescription){newInformation.TaskDescription=TaskDescription}
+if(Time){newInformation.Time=Time}
+if(TotalTime){newInformation.TotalTime=TotalTime}
+if(Status){newInformation.Status=Status}
+// if(email){newInformation.email=email} 
+let information =await UserSignin.findById(req.params.id);
+// console.log(information);
+
+if(!information){return res.status(404).send('not found')}
+console.log(newInformation);
+
+  information = await UserSignin.findByIdAndUpdate(req.params.id,{$set:newInformation},{new:true}).select("-password")
+      res.json(information)
+     
+  }catch(error){
+      // console.error(error.message);
+      res.status(500).send("Somthing went wrong")
+  }
+})
+
+
 module.exports= router;
