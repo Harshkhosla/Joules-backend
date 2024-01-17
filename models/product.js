@@ -1,0 +1,51 @@
+const mongoose = require('mongoose');
+
+const productSchema = new mongoose.Schema({
+  pid: { type: String, unique: true, required: true },
+  product_name: String,
+  desc: String,
+  fit:String,
+  discount: String,
+  discount_date: {
+    end: String,
+    start: String,
+  },
+  discount_type: String,
+  gallery_images: [{buffer: Buffer,
+    url: String,}],
+  category: String,
+  sub_category: String,
+  selling_price: String,
+  quantity_pi: Number,
+  reward_points: String,
+  sku: String,
+  sales: Number,
+  tags: String,
+  thumbnail_image:  {
+    buffer: Buffer,
+    url: String,
+  },
+  unit: String,
+  unit_price: Number,
+  variantEnabled: { type: Boolean, default: true }, 
+  product_desc: String,
+  colors: [],
+  variants: [],
+  size:[],
+  shipping_returns:String,
+  fabric:String,
+  about:String,
+  refund:String,
+  rating:{type:String,default:"0"},
+  draft:String,
+  product_detail:String,
+  SEOArea: {
+    metaTitle: String,
+    metaDescription: String,
+    metaKeywords: String,
+    images: Buffer,
+    images1: String,
+  },
+});
+
+module.exports = mongoose.model('Product', productSchema);
